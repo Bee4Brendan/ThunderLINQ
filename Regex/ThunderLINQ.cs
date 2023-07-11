@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-public class NBA_Player
+public class NBAPlayer
 {
     private string FirstName { get; set; }
     private string LastName { get; set; }
@@ -20,7 +20,7 @@ public class NBA_Player
     private double Reb { get; set; }
 
 
-    public NBA_Player(string first, string last, string college, int number, Position pos, int age, string height, int weight, double pts, double ast, double reb)
+    public NBAPlayer(string first, string last, string college, int number, Position pos, int age, string height, int weight, double pts, double ast, double reb)
     {
         this.FirstName = first;
         this.LastName = last;
@@ -45,12 +45,12 @@ public class NBA_Player
         return this.College;
     }
 
-    public void SetPosition(NBA_Player.Position pos)
+    public void SetPosition(NBAPlayer.Position pos)
     {
         this.Pos = pos;
     }
 
-    public NBA_Player.Position GetPosition()
+    public NBAPlayer.Position GetPosition()
     {
         return this.Pos;
     }
@@ -72,13 +72,12 @@ public class NBA_Player
 
     public double GetRealHeight()
     {
-        int feet, inches;
         double realHeight;
 
-        int.TryParse(this.Height.Substring(0, 1), out feet);
-        int.TryParse(this.Height.Substring(3, 1), out inches);
+        int.TryParse(this.Height.AsSpan(0, 1), out int feet);
+        int.TryParse(this.Height.AsSpan(3, 1), out int inches);
 
-        if(inches == 1) int.TryParse(this.Height.Substring(3, 2), out inches);
+        if (inches == 1) int.TryParse(this.Height.AsSpan(3, 2), out inches);
 
         realHeight = (feet * 12) + inches;
 
@@ -107,12 +106,12 @@ public class NBA_Player
 }
 internal class NBA
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         NBA nba = new();
 
         // The Oklahoma City Thunder Team
-        List<NBA_Player> OKC_THUNDER = new();
+        List<NBAPlayer> OKC_THUNDER = new();
 
         // Load the Players and Start the queries
         nba.DraftPlayers(OKC_THUNDER);
@@ -123,42 +122,42 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> This method "signs" the players to the Oklahoma City Thunder
      */
-    public void DraftPlayers(List<NBA_Player> team)
+    public void DraftPlayers(List<NBAPlayer> team)
     {
         // updated 7/8/2023
-        team.Add(new NBA_Player("Shai", "Gilgeous-Alexander", "Kentucky", 2, NBA_Player.Position.PG, 24, "6' 6\"", 195, 31.4, 5.5, 4.8));
-        team.Add(new NBA_Player("Davis", "Bertans", "--", 44, NBA_Player.Position.SF, 30, "6' 10\"", 225, 0.0, 0.0, 0.0));
-        team.Add(new NBA_Player("Luguentz", "Dort", "Arizona State", 5, NBA_Player.Position.G, 24, "6' 4\"", 220, 13.7, 2.1, 4.6));
-        team.Add(new NBA_Player("Chet", "Holmgren", "Gonzaga", 7, NBA_Player.Position.PF, 21, "7' 1\"", 208, 0.0, 0.0, 0.0));
-        team.Add(new NBA_Player("Dario", "Saric", "--", 9, NBA_Player.Position.PF, 29, "6' 10\"", 225, 7.4, .9, 3.3));
-        team.Add(new NBA_Player("Josh", "Giddey", "Australia", 3, NBA_Player.Position.SG, 20, "6' 8\"", 216, 16.6, 6.2, 7.9));
-        team.Add(new NBA_Player("Ousmane", "Dieng", "--", 13, NBA_Player.Position.F, 20, "6' 9\"", 220, 4.9, 1.2, 2.7));
-        team.Add(new NBA_Player("Jalen", "Williams", "Santa Clara", 8, NBA_Player.Position.F, 22, "6' 6\"", 218, 14.1, 3.3, 4.5));
-        team.Add(new NBA_Player("Aleksej", "Pokusevski", "--", 17, NBA_Player.Position.F, 21, "7' 0\"", 190, 8.1, 1.9, 4.7));
-        team.Add(new NBA_Player("Tre", "Mann", "Florida", 23, NBA_Player.Position.PG, 22, "6' 3\"", 184, 7.7, 1.8, 2.3));
-        team.Add(new NBA_Player("Kenrich", "Williams", "TCU", 34, NBA_Player.Position.SF, 28, "6' 6\"", 210, 8.0, 2.0, 4.9));
-        team.Add(new NBA_Player("Jaylin", "Williams", "Arkansas", 6, NBA_Player.Position.F, 20, "6' 9\"", 245, 5.9, 1.6, 4.9));
-        team.Add(new NBA_Player("Jeremiah", "Robinson-Earl", "Villanova", 50, NBA_Player.Position.PF, 22, "6' 8\"", 240, 6.8, 1.0, 4.2));
-        team.Add(new NBA_Player("Lindy", "Waters III", "Oklahoma State", 12, NBA_Player.Position.F, 25, "6' 6\"", 210, 5.2, .7, 1.8));
-        team.Add(new NBA_Player("Isaiah", "Joe", "Arkansas", 11, NBA_Player.Position.SG, 23, "6' 3\"", 165, 9.5, 1.2, 2.4));
-        team.Add(new NBA_Player("Aaron", "Wiggins", "Maryland", 21, NBA_Player.Position.SG, 24, "6' 5\"", 190, 6.8, 1.1, 3.0));
-        team.Add(new NBA_Player("Jared", "Butler", "Baylor", 14, NBA_Player.Position.SG, 22, "6' 3\"", 193, 6.2, 1.3, .7));
-        team.Add(new NBA_Player("Olivier", "Sarr", "Kentucky", 30, NBA_Player.Position.C, 24, "7' 0\"", 240, 4.0, .4, 3.4));
-        team.Add(new NBA_Player("Cason", "Wallace", "Kentucky", 22, NBA_Player.Position.G, 19, "6' 4\"", 193, 0.0, 0.0, 0.0));
-        team.Add(new NBA_Player("Keyontae", "Johnson", "Kansas State", 18, NBA_Player.Position.F, 24, "6' 6\"", 235, 0, 0, 0));
-        team.Add(new NBA_Player("Vasilije", "Micic", "Serbia", 98, NBA_Player.Position.G, 29, "6' 5\"", 203, 13.1, 4.8, 2.4));
-        team.Add(new NBA_Player("Victor", "Oladipo", "Indiana", 4, NBA_Player.Position.SG, 31, "6' 4\"", 213, 10.7, 3.5, 3.0));
-        team.Add(new NBA_Player("KJ", "Williams", "LSU", 12, NBA_Player.Position.F, 23, "6' 10\"", 250, 0.0, 0.0, 0.0));
+        team.Add(new NBAPlayer("Shai", "Gilgeous-Alexander", "Kentucky", 2, NBAPlayer.Position.PG, 24, "6' 6\"", 195, 31.4, 5.5, 4.8));
+        team.Add(new NBAPlayer("Davis", "Bertans", "--", 44, NBAPlayer.Position.SF, 30, "6' 10\"", 225, 0.0, 0.0, 0.0));
+        team.Add(new NBAPlayer("Luguentz", "Dort", "Arizona State", 5, NBAPlayer.Position.G, 24, "6' 4\"", 220, 13.7, 2.1, 4.6));
+        team.Add(new NBAPlayer("Chet", "Holmgren", "Gonzaga", 7, NBAPlayer.Position.PF, 21, "7' 1\"", 208, 0.0, 0.0, 0.0));
+        team.Add(new NBAPlayer("Dario", "Saric", "--", 9, NBAPlayer.Position.PF, 29, "6' 10\"", 225, 7.4, .9, 3.3));
+        team.Add(new NBAPlayer("Josh", "Giddey", "Australia", 3, NBAPlayer.Position.SG, 20, "6' 8\"", 216, 16.6, 6.2, 7.9));
+        team.Add(new NBAPlayer("Ousmane", "Dieng", "--", 13, NBAPlayer.Position.F, 20, "6' 9\"", 220, 4.9, 1.2, 2.7));
+        team.Add(new NBAPlayer("Jalen", "Williams", "Santa Clara", 8, NBAPlayer.Position.F, 22, "6' 6\"", 218, 14.1, 3.3, 4.5));
+        team.Add(new NBAPlayer("Aleksej", "Pokusevski", "--", 17, NBAPlayer.Position.F, 21, "7' 0\"", 190, 8.1, 1.9, 4.7));
+        team.Add(new NBAPlayer("Tre", "Mann", "Florida", 23, NBAPlayer.Position.PG, 22, "6' 3\"", 184, 7.7, 1.8, 2.3));
+        team.Add(new NBAPlayer("Kenrich", "Williams", "TCU", 34, NBAPlayer.Position.SF, 28, "6' 6\"", 210, 8.0, 2.0, 4.9));
+        team.Add(new NBAPlayer("Jaylin", "Williams", "Arkansas", 6, NBAPlayer.Position.F, 20, "6' 9\"", 245, 5.9, 1.6, 4.9));
+        team.Add(new NBAPlayer("Jeremiah", "Robinson-Earl", "Villanova", 50, NBAPlayer.Position.PF, 22, "6' 8\"", 240, 6.8, 1.0, 4.2));
+        team.Add(new NBAPlayer("Lindy", "Waters III", "Oklahoma State", 12, NBAPlayer.Position.F, 25, "6' 6\"", 210, 5.2, .7, 1.8));
+        team.Add(new NBAPlayer("Isaiah", "Joe", "Arkansas", 11, NBAPlayer.Position.SG, 23, "6' 3\"", 165, 9.5, 1.2, 2.4));
+        team.Add(new NBAPlayer("Aaron", "Wiggins", "Maryland", 21, NBAPlayer.Position.SG, 24, "6' 5\"", 190, 6.8, 1.1, 3.0));
+        team.Add(new NBAPlayer("Jared", "Butler", "Baylor", 14, NBAPlayer.Position.SG, 22, "6' 3\"", 193, 6.2, 1.3, .7));
+        team.Add(new NBAPlayer("Olivier", "Sarr", "Kentucky", 30, NBAPlayer.Position.C, 24, "7' 0\"", 240, 4.0, .4, 3.4));
+        team.Add(new NBAPlayer("Cason", "Wallace", "Kentucky", 22, NBAPlayer.Position.G, 19, "6' 4\"", 193, 0.0, 0.0, 0.0));
+        team.Add(new NBAPlayer("Keyontae", "Johnson", "Kansas State", 18, NBAPlayer.Position.F, 24, "6' 6\"", 235, 0, 0, 0));
+        team.Add(new NBAPlayer("Vasilije", "Micic", "Serbia", 98, NBAPlayer.Position.G, 29, "6' 5\"", 203, 13.1, 4.8, 2.4));
+        team.Add(new NBAPlayer("Victor", "Oladipo", "Indiana", 4, NBAPlayer.Position.SG, 31, "6' 4\"", 213, 10.7, 3.5, 3.0));
+        team.Add(new NBAPlayer("KJ", "Williams", "LSU", 12, NBAPlayer.Position.F, 23, "6' 10\"", 250, 0.0, 0.0, 0.0));
     }
 
-    public void Start(List<NBA_Player> team)
+    public void Start(List<NBAPlayer> team)
     {
         string input;
         PrintMenu();
-        input = Console.ReadLine();
 
         try
         {
+            input = Console.ReadLine();
             // Null check
             while (!String.IsNullOrEmpty(input) && !input[0].Equals('X'))
             {
@@ -206,7 +205,7 @@ internal class NBA
                 }
 
                 PrintMenu();
-                
+
                 input = Console.ReadLine();
             }
             if (String.IsNullOrEmpty(input))
@@ -215,7 +214,7 @@ internal class NBA
                 Start(team);
             }
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             Console.WriteLine("Try Again, \n" + e.Message);
         }
@@ -235,7 +234,7 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> Default Order, which is Sorted by Salary in Descending order by USD $ </summary>
      */
-    public void PrintRoster(IEnumerable<NBA_Player> team, String message)
+    public void PrintRoster(IEnumerable<NBAPlayer> team, String message)
     {
         Console.WriteLine("-------------------------------------------- | Oklahoma City Thunder Roster " + message + " | ---------------------------------------------\n");
         Console.WriteLine("{0,-30} {1,-30} {2,-8} {3,-10} {4,-4} {5,-8:N1} {6,-8} {7,-8} {8,-8} {9,-8}", "Name", "College", "Number", "Position", "Age", "Height", "Weight", "Points", "Assists", "Rebounds");
@@ -255,9 +254,9 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> Sorts and prints the team by Age in Ascending Order </summary>
      */
-    public void GetRosterByAge(List<NBA_Player> team)
+    public void GetRosterByAge(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> rosterByAge = team.OrderBy(player => player.GetAge());
+        IEnumerable<NBAPlayer> rosterByAge = team.OrderBy(player => player.GetAge());
         PrintRoster(rosterByAge, "(By Age)");
     }
 
@@ -265,9 +264,9 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> Sorts and prints the team by Jersey Number in Ascending Order
      */
-    public void GetRosterByNumber(List<NBA_Player> team)
+    public void GetRosterByNumber(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> rosterByNumber = team.OrderBy(player => player.GetNumber());
+        IEnumerable<NBAPlayer> rosterByNumber = team.OrderBy(player => player.GetNumber());
         PrintRoster(rosterByNumber, "(By #)");
     }
 
@@ -275,9 +274,9 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> Sorts and prints the team by Position
      */
-    public void GetRosterByPosition(List<NBA_Player> team)
+    public void GetRosterByPosition(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> rosterByPosition = team.OrderBy(player => player.GetPosition());
+        IEnumerable<NBAPlayer> rosterByPosition = team.OrderBy(player => player.GetPosition());
         PrintRoster(rosterByPosition, "(By Position)");
     }
 
@@ -285,10 +284,10 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> This method finds and prints the team's players that are seven feet tall or above (7'0"+) </summary>
      */
-    public void GetSevenFooters(List<NBA_Player> team)
+    public void GetSevenFooters(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> sevenFooters = team.FindAll(player => player.GetHeight().ElementAt(0) == '7');
-        IEnumerable<NBA_Player> query =
+        IEnumerable<NBAPlayer> sevenFooters = team.FindAll(player => player.GetHeight().ElementAt(0) == '7');
+        IEnumerable<NBAPlayer> query =
             from player in team
             where player.GetHeight().ElementAt(0) == '7'
             select player;
@@ -300,9 +299,9 @@ internal class NBA
      * <param> The team that is being sorted </param>
      * <summary> This method sorts and prints the team's roster in Alphabetical order </summary>
      */
-    public void GetAlphabeticalRosterByFirstName(List<NBA_Player> team)
+    public void GetAlphabeticalRosterByFirstName(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> alphabeticalRoster = team.OrderBy(player => player.GetName());
+        IEnumerable<NBAPlayer> alphabeticalRoster = team.OrderBy(player => player.GetName());
         PrintRoster(alphabeticalRoster, "(Alphabetical [first name])");
     }
 
@@ -310,9 +309,9 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> This method finds and prints the team's players that went to Kentucky University for college </summary>
      */
-    public void GetKentuckyPlayers(List<NBA_Player> team)
+    public void GetKentuckyPlayers(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> kentuckyRoster = team.FindAll(player => player.GetCollege().Contains("Kentucky"));
+        IEnumerable<NBAPlayer> kentuckyRoster = team.FindAll(player => player.GetCollege().Contains("Kentucky"));
         PrintRoster(kentuckyRoster, "(Kentucky Players)");
     }
 
@@ -320,7 +319,7 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> This method finds and prints the team's players that are Williams </summary>
      */
-    public void GetWilliams(List<NBA_Player> team)
+    public void GetWilliams(List<NBAPlayer> team)
     {
         // IEnumerable<NBA_Player> q = team.FindAll(player => player.getName().Contains("William"));
         // Regex pattern for any William
@@ -333,9 +332,9 @@ internal class NBA
         PrintRoster(query, "(Williamses)");
     }
 
-    public void GetWeights(List<NBA_Player> team)
+    public void GetWeights(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> rosterByWeight = team.OrderByDescending(player => player.GetWeight());
+        IEnumerable<NBAPlayer> rosterByWeight = team.OrderByDescending(player => player.GetWeight());
         PrintRoster(rosterByWeight, "(By Weight)");
     }
 
@@ -343,9 +342,9 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> This method sorts and prints the team's roster by Points scored in the 2022-23 Season (Descending) </summary>
      */
-    public void GetPoints(List<NBA_Player> team)
+    public void GetPoints(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> rosterByPoints = team.OrderByDescending(player => player.GetPoints());
+        IEnumerable<NBAPlayer> rosterByPoints = team.OrderByDescending(player => player.GetPoints());
         PrintRoster(rosterByPoints, "(By Most Points)");
     }
 
@@ -353,9 +352,9 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> This method sorts and prints the team's roster by Assists scored in the 2022-23 Season (Descending) </summary>
      */
-    public void GetAssists(List<NBA_Player> team)
+    public void GetAssists(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> rosterByAssists = team.OrderByDescending(player => player.GetAssists());
+        IEnumerable<NBAPlayer> rosterByAssists = team.OrderByDescending(player => player.GetAssists());
         PrintRoster(rosterByAssists, "(By Most Assists)");
     }
 
@@ -363,9 +362,9 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> This method sorts and prints the team's roster by Rebounds scored in the 2022-23 Season (Descending) </summary>
      */
-    public void GetRebounds(List<NBA_Player> team)
+    public void GetRebounds(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> rosterByRebounds = team.OrderByDescending(player => player.GetRebounds());
+        IEnumerable<NBAPlayer> rosterByRebounds = team.OrderByDescending(player => player.GetRebounds());
         PrintRoster(rosterByRebounds, "(By Most Rebounds)");
     }
 
@@ -373,9 +372,9 @@ internal class NBA
      * <param> The team that is being referenced </param>
      * <summary> This method sorts and prints the team's roster by Height (Descending) </summary>
      */
-    public void GetHeights(List<NBA_Player> team)
+    public void GetHeights(List<NBAPlayer> team)
     {
-        IEnumerable<NBA_Player> rosterByHeight = team.OrderByDescending(player => player.GetRealHeight());
+        IEnumerable<NBAPlayer> rosterByHeight = team.OrderByDescending(player => player.GetRealHeight());
         PrintRoster(rosterByHeight, "(By Height)");
     }
 }
