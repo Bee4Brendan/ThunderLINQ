@@ -134,7 +134,7 @@ internal class NBA
      */
     public void DraftPlayers(List<NBAPlayer> team)
     {
-        // updated 7/8/2023
+        // updated 7/19/2023
         team.Add(new NBAPlayer("Shai", "Gilgeous-Alexander", "Kentucky", 2, NBAPlayer.Position.PG, 24, "6' 6\"", 195, 31.4, 5.5, 4.8));
         team.Add(new NBAPlayer("Davis", "Bertans", "--", 44, NBAPlayer.Position.SF, 30, "6' 10\"", 225, 0.0, 0.0, 0.0));
         team.Add(new NBAPlayer("Luguentz", "Dort", "Arizona State", 5, NBAPlayer.Position.G, 24, "6' 4\"", 220, 13.7, 2.1, 4.6));
