@@ -158,6 +158,8 @@ internal class NBA
         team.Add(new NBAPlayer("Vasilije", "Micic", "Serbia", 98, NBAPlayer.Position.G, 29, "6' 5\"", 203, 13.1, 4.8, 2.4));
         team.Add(new NBAPlayer("Victor", "Oladipo", "Indiana", 4, NBAPlayer.Position.SG, 31, "6' 4\"", 213, 10.7, 3.5, 3.0));
         team.Add(new NBAPlayer("KJ", "Williams", "LSU", 12, NBAPlayer.Position.F, 23, "6' 10\"", 250, 0.0, 0.0, 0.0));
+        team.Add(new NBAPlayer("Usman", "Garuba", "--", 0, NBAPlayer.Position.PF, 21, "6' 8\"", 229, 0.0, 0.0, 0.0));
+        team.Add(new NBAPlayer("TyTy", "Washington Jr.", "Kentucky", 0, NBAPlayer.Position.G, 21, "6' 3\"", 195, 0.0, 0.0, 0.0));
     }
 
     public void Start(List<NBAPlayer> team)
