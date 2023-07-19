@@ -35,6 +35,16 @@ public class NBAPlayer
         this.Reb = reb;
     }
 
+    public string GetFirstName()
+    {
+        return FirstName;
+    }
+
+    public string GetLastName()
+    {
+        return LastName;
+    }
+
     public string GetName()
     {
         return FirstName + " " + LastName;
@@ -301,7 +311,7 @@ internal class NBA
      */
     public void GetAlphabeticalRosterByFirstName(List<NBAPlayer> team)
     {
-        IEnumerable<NBAPlayer> alphabeticalRoster = team.OrderBy(player => player.GetName());
+        IEnumerable<NBAPlayer> alphabeticalRoster = team.OrderBy(player => player.GetFirstName());
         PrintRoster(alphabeticalRoster, "(Alphabetical [first name])");
     }
 
