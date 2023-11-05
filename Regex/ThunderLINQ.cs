@@ -18,9 +18,10 @@ public class NBAPlayer
     private double Pts { get; set; }
     private double Ast { get; set; }
     private double Reb { get; set; }
+    private DateTime DOB { get; set; }
 
 
-    public NBAPlayer(string first, string last, string college, int number, Position pos, int age, string height, int weight, double pts, double ast, double reb)
+    public NBAPlayer(string first, string last, string college, int number, Position pos, int age, string height, int weight, double pts, double ast, double reb, DateTime dob)
     {
         this.FirstName = first;
         this.LastName = last;
@@ -33,6 +34,7 @@ public class NBAPlayer
         this.Pts = pts;
         this.Ast = ast;
         this.Reb = reb;
+        this.DOB = dob;
     }
 
     public string GetFirstName()
@@ -72,7 +74,12 @@ public class NBAPlayer
 
     public int GetAge()
     {
-        return this.Age;
+        int month = DateTime.Today.Month - this.GetDOB().Month;
+        int day = DateTime.Today.Day - this.GetDOB().Day;
+        int year = DateTime.Today.Year - this.GetDOB().Year;
+        if (month == 0 && day <= 0) year--;
+        else if (month < 0) year--;
+        return year;
     }
 
     public string GetHeight()
@@ -113,6 +120,11 @@ public class NBAPlayer
     {
         return this.Reb;
     }
+
+    public DateTime GetDOB()
+    {
+        return this.DOB;
+    }
 }
 internal class NBA
 {
@@ -135,29 +147,25 @@ internal class NBA
     public void DraftPlayers(List<NBAPlayer> team)
     {
         // updated 9/19/2023 16:31
-        team.Add(new NBAPlayer("Shai", "Gilgeous-Alexander", "Kentucky", 2, NBAPlayer.Position.PG, 24, "6' 6\"", 195, 31.4, 5.5, 4.8));
-        team.Add(new NBAPlayer("Davis", "Bertans", "--", 44, NBAPlayer.Position.SF, 30, "6' 10\"", 225, 0.0, 0.0, 0.0));
-        team.Add(new NBAPlayer("Luguentz", "Dort", "Arizona State", 5, NBAPlayer.Position.G, 24, "6' 4\"", 220, 13.7, 2.1, 4.6));
-        team.Add(new NBAPlayer("Chet", "Holmgren", "Gonzaga", 7, NBAPlayer.Position.PF, 21, "7' 1\"", 208, 0.0, 0.0, 0.0));        team.Add(new NBAPlayer("Josh", "Giddey", "Australia", 3, NBAPlayer.Position.SG, 20, "6' 8\"", 216, 16.6, 6.2, 7.9));
-        team.Add(new NBAPlayer("Ousmane", "Dieng", "--", 13, NBAPlayer.Position.F, 20, "6' 9\"", 220, 4.9, 1.2, 2.7));
-        team.Add(new NBAPlayer("Jalen", "Williams", "Santa Clara", 8, NBAPlayer.Position.F, 22, "6' 6\"", 218, 14.1, 3.3, 4.5));
-        team.Add(new NBAPlayer("Aleksej", "Pokusevski", "--", 17, NBAPlayer.Position.F, 21, "7' 0\"", 190, 8.1, 1.9, 4.7));
-        team.Add(new NBAPlayer("Tre", "Mann", "Florida", 23, NBAPlayer.Position.PG, 22, "6' 3\"", 184, 7.7, 1.8, 2.3));
-        team.Add(new NBAPlayer("Kenrich", "Williams", "TCU", 34, NBAPlayer.Position.SF, 28, "6' 6\"", 210, 8.0, 2.0, 4.9));
-        team.Add(new NBAPlayer("Jaylin", "Williams", "Arkansas", 6, NBAPlayer.Position.F, 20, "6' 9\"", 245, 5.9, 1.6, 4.9));
-        team.Add(new NBAPlayer("Jeremiah", "Robinson-Earl", "Villanova", 50, NBAPlayer.Position.PF, 22, "6' 8\"", 240, 6.8, 1.0, 4.2));
-        team.Add(new NBAPlayer("Lindy", "Waters III", "Oklahoma State", 12, NBAPlayer.Position.F, 25, "6' 6\"", 210, 5.2, .7, 1.8));
-        team.Add(new NBAPlayer("Isaiah", "Joe", "Arkansas", 11, NBAPlayer.Position.SG, 23, "6' 3\"", 165, 9.5, 1.2, 2.4));
-        team.Add(new NBAPlayer("Aaron", "Wiggins", "Maryland", 21, NBAPlayer.Position.SG, 24, "6' 5\"", 190, 6.8, 1.1, 3.0));
-        team.Add(new NBAPlayer("Olivier", "Sarr", "Kentucky", 30, NBAPlayer.Position.C, 24, "7' 0\"", 240, 4.0, .4, 3.4));
-        team.Add(new NBAPlayer("Cason", "Wallace", "Kentucky", 22, NBAPlayer.Position.G, 19, "6' 4\"", 193, 0.0, 0.0, 0.0));
-        team.Add(new NBAPlayer("Keyontae", "Johnson", "Kansas State", 18, NBAPlayer.Position.F, 24, "6' 6\"", 235, 0, 0, 0));
-        team.Add(new NBAPlayer("Vasilije", "Micic", "Serbia", 98, NBAPlayer.Position.G, 29, "6' 5\"", 203, 13.1, 4.8, 2.4));
-        team.Add(new NBAPlayer("Victor", "Oladipo", "Indiana", 4, NBAPlayer.Position.SG, 31, "6' 4\"", 213, 10.7, 3.5, 3.0));
-        team.Add(new NBAPlayer("KJ", "Williams", "LSU", 12, NBAPlayer.Position.F, 23, "6' 10\"", 250, 0.0, 0.0, 0.0));
-        team.Add(new NBAPlayer("TyTy", "Washington Jr.", "Kentucky", 0, NBAPlayer.Position.G, 21, "6' 3\"", 195, 0.0, 0.0, 0.0));
-        team.Add(new NBAPlayer("Jack", "White", "Duke", 0, NBAPlayer.Position.F, 26, "6' 7\"", 225, 0.0, 0.0, 0.0));
-
+        team.Add(new NBAPlayer("Shai", "Gilgeous-Alexander", "Kentucky", 2, NBAPlayer.Position.PG, 24, "6' 6\"", 195, 31.4, 5.5, 4.8, new DateTime(1998, 7, 12)));
+        team.Add(new NBAPlayer("Davis", "Bertans", "--", 9, NBAPlayer.Position.SF, 30, "6' 10\"", 225, 0.0, 0.0, 0.0, new DateTime(1992, 11, 12)));
+        team.Add(new NBAPlayer("Luguentz", "Dort", "Arizona State", 5, NBAPlayer.Position.G, 24, "6' 4\"", 220, 13.7, 2.1, 4.6, new DateTime(1999, 4, 19)));
+        team.Add(new NBAPlayer("Chet", "Holmgren", "Gonzaga", 7, NBAPlayer.Position.PF, 21, "7' 1\"", 208, 0.0, 0.0, 0.0, new DateTime(2002, 5, 1)));
+        team.Add(new NBAPlayer("Josh", "Giddey", "Australia", 3, NBAPlayer.Position.SG, 20, "6' 8\"", 216, 16.6, 6.2, 7.9, new DateTime(2002, 10, 10)));
+        team.Add(new NBAPlayer("Ousmane", "Dieng", "--", 13, NBAPlayer.Position.F, 20, "6' 9\"", 220, 4.9, 1.2, 2.7, new DateTime(2003, 5, 21)));
+        team.Add(new NBAPlayer("Jalen", "Williams", "Santa Clara", 8, NBAPlayer.Position.F, 22, "6' 6\"", 218, 14.1, 3.3, 4.5, new DateTime(2001, 4, 14)));
+        team.Add(new NBAPlayer("Aleksej", "Pokusevski", "--", 17, NBAPlayer.Position.F, 21, "7' 0\"", 190, 8.1, 1.9, 4.7, new DateTime(2001, 12, 26)));
+        team.Add(new NBAPlayer("Tre", "Mann", "Florida", 23, NBAPlayer.Position.PG, 22, "6' 3\"", 184, 7.7, 1.8, 2.3, new DateTime(2001, 2, 3)));
+        team.Add(new NBAPlayer("Kenrich", "Williams", "TCU", 34, NBAPlayer.Position.SF, 28, "6' 6\"", 210, 8.0, 2.0, 4.9, new DateTime(1994, 12, 2)));
+        team.Add(new NBAPlayer("Jaylin", "Williams", "Arkansas", 6, NBAPlayer.Position.F, 20, "6' 9\"", 245, 5.9, 1.6, 4.9, new DateTime(2002, 6, 29)));
+        //team.Add(new NBAPlayer("Jeremiah", "Robinson-Earl", "Villanova", 50, NBAPlayer.Position.PF, 22, "6' 8\"", 240, 6.8, 1.0, 4.2, new DateTime(1992, 11, 12)));
+        team.Add(new NBAPlayer("Lindy", "Waters III", "Oklahoma State", 12, NBAPlayer.Position.F, 25, "6' 6\"", 210, 5.2, .7, 1.8, new DateTime(1997, 7, 28)));
+        team.Add(new NBAPlayer("Isaiah", "Joe", "Arkansas", 11, NBAPlayer.Position.SG, 23, "6' 3\"", 165, 9.5, 1.2, 2.4, new DateTime(1999, 7, 2)));
+        team.Add(new NBAPlayer("Aaron", "Wiggins", "Maryland", 21, NBAPlayer.Position.SG, 24, "6' 5\"", 190, 6.8, 1.1, 3.0, new DateTime(1999, 1, 2)));
+        team.Add(new NBAPlayer("Olivier", "Sarr", "Kentucky", 30, NBAPlayer.Position.C, 24, "7' 0\"", 240, 4.0, .4, 3.4, new DateTime(1999, 2, 20)));
+        team.Add(new NBAPlayer("Cason", "Wallace", "Kentucky", 22, NBAPlayer.Position.G, 19, "6' 4\"", 193, 0.0, 0.0, 0.0, new DateTime(2003, 11, 7)));
+        team.Add(new NBAPlayer("Keyontae", "Johnson", "Kansas State", 18, NBAPlayer.Position.F, 24, "6' 6\"", 235, 0, 0, 0, new DateTime(2000, 5, 24)));
+        team.Add(new NBAPlayer("Vasilije", "Micic", "Serbia", 29, NBAPlayer.Position.G, 29, "6' 5\"", 203, 13.1, 4.8, 2.4, new DateTime(1994, 1, 13)));
     }
 
     public void Start(List<NBAPlayer> team)
